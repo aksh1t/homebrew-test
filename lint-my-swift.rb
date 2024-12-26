@@ -1,9 +1,9 @@
 class lint-my-swift < Formula
   desc "lint-my-swift CLI Tool"
   homepage "https://github.com/aksh1t/homebrew-test"
-  url "https://github.com/aksh1t/homebrew-test/releases/download/lint-my-swift-0.0.4/lint-my-swift.artifactbundle.zip"
-  sha256 "78bcc5c186d9d372155db5955c0eea4cb591e131d221004ad50b0b6ec623eb23"
-  version "lint-my-swift-0.0.4"
+  url "https://github.com/aksh1t/homebrew-test/releases/download/lint-my-swift-0.0.5/lint-my-swift.artifactbundle.zip"
+  sha256 "d286e7ba7fa4dbd2df297dd8120dc77303e14114eea4e445b598d433d9fc88d2"
+  version "lint-my-swift-0.0.5"
 
   def install
     system "unzip", "-o", cached_download
