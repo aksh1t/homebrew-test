@@ -1,5 +1,5 @@
-class <toolname> < Formula
-  desc "<toolname> CLI Tool"
+class <classname> < Formula
+  desc "<classname> CLI Tool"
   homepage "https://github.com/PreternaturalAI/homebrew-preternatural"
   url
   sha256
