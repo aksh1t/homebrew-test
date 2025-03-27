@@ -31,14 +31,9 @@ class Preternatural < Formula
     end
   end
 
-  # Define service for the daemon if one exists
-  daemon_file = Dir.glob("*-daemon.zip").first
-  if daemon_file
-    service do
-      daemon_name = File.basename(daemon_file, "-daemon.zip")
-      run [opt_bin/daemon_name]
-      keep_alive true
-      working_dir HOMEBREW_PREFIX
-    end
+  service do
+    run [opt_bin/preternaturald]
+    keep_alive true
+    require_root true
   end
 end
