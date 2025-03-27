@@ -15,18 +15,16 @@ class Preternatural < Formula
       ["*-daemon.zip", "-daemon.zip"]
     ].each do |glob_pattern, suffix|
       Dir.glob(glob_pattern).each do |zip_name|
-        cache_name = File.basename(cached_download, File.extname(cached_download))
-        cache_dir = File.dirname(cached_download)
-        zip_file = "#{cache_dir}/#{cache_name}/#{zip_name}"
-
         # Unzip the inner zip file directly
-        system "unzip", "-o", zip_file
+        system "unzip", "-o", zip_name
         
         # Extract tool name from the zip filename
-        tool_name = File.basename(zip_file, suffix)
+        tool_name = File.basename(zip_name, suffix)
         
+        system "ls", "-la"
+
         # Install the binary
-        binary_path = "#{cache_dir}/#{cache_name}/#{zip_name}/#{tool_name}/bin/#{tool_name}"
+        binary_path = "#{tool_name}.artifactbundle/#{tool_name}/bin/#{tool_name}"
         bin.install binary_path if File.exist?(binary_path)
       end
     end
