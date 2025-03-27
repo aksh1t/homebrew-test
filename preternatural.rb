@@ -15,18 +15,18 @@ class Preternatural < Formula
       ["*-daemon.zip", "-daemon.zip"]
     ].each do |glob_pattern, suffix|
       Dir.glob(glob_pattern).each do |zip_file|
-        # Create a temporary directory for each zip
-        temp_dir = mktemp
-        
-        # Unzip the zip file
-        system "unzip", "-o", zip_file, "-d", temp_dir
+        # Create a temporary directory for each zip and use it in a block
+        mktemp do |temp_dir|
+          # Unzip the zip file
+          system "unzip", "-o", zip_file, "-d", temp_dir
 
-        # Extract tool name from the zip filename
-        tool_name = File.basename(zip_file, suffix)
+          # Extract tool name from the zip filename
+          tool_name = File.basename(zip_file, suffix)
 
-        # Install the binary
-        binary_path = "#{temp_dir}/#{tool_name}/bin/#{tool_name}"
-        bin.install binary_path => tool_name if File.exist?(binary_path)
+          # Install the binary
+          binary_path = "#{temp_dir}/#{tool_name}/bin/#{tool_name}"
+          bin.install binary_path => tool_name if File.exist?(binary_path)
+        end
       end
     end
   end
