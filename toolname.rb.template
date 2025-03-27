@@ -31,32 +31,14 @@ class <classname> < Formula
     end
   end
 
-  service do
-    # Find and configure all daemon zips
-    daemons = Dir.glob("*-daemon.zip").map do |daemon_zip|
-      # Create a temporary directory for each daemon zip
-      temp_dir = mktemp
-      
-      # Unzip the daemon zip
-      system "unzip", "-o", daemon_zip, "-d", temp_dir
-
-      # Extract tool name from the zip filename (before -daemon.zip)
-      tool_name = File.basename(daemon_zip, "-daemon.zip")
-
-      # Path to the daemon executable
-      daemon_path = "#{temp_dir}/#{tool_name}/bin/#{tool_name}"
-
-      # Return daemon configuration if executable exists
-      if File.exist?(daemon_path)
-        {
-          run: [opt_bin/tool_name],
-          keep_alive: true,
-          run_at_load: true
-        }
-      end
-    end.compact
-
-    # If multiple daemons exist, return an array
-    daemons.size > 1 ? daemons : daemons.first
+  # Define services for each daemon
+  Dir.glob("*-daemon.zip").each do |daemon_zip|
+    service do
+      name File.basename(daemon_zip, "-daemon.zip")
+      run [opt_bin/File.basename(daemon_zip, "-daemon.zip")]
+      keep_alive true
+      environment_variables PATH: std_service_path_env
+      working_dir HOMEBREW_PREFIX
+    end
   end
 end
