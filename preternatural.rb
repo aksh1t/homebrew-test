@@ -30,10 +30,4 @@ class Preternatural < Formula
       end
     end
   end
-
-  service do
-    run [opt_bin/preternaturald]
-    keep_alive true
-    require_root true
-  end
 end
