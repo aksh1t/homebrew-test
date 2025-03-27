@@ -14,7 +14,11 @@ class Preternatural < Formula
       ["*-executable.zip", "-executable.zip"],
       ["*-daemon.zip", "-daemon.zip"]
     ].each do |glob_pattern, suffix|
-      Dir.glob(glob_pattern).each do |zip_file|
+      Dir.glob(glob_pattern).each do |zip_name|
+        cache_dir = File.dirname(cached_download)
+        zip_file = "#{cache_dir}/#{zip_file}"
+        zip_dir = File.dirname(zip_file)
+
         # Unzip the inner zip file directly
         system "unzip", "-o", zip_file
         
@@ -22,7 +26,7 @@ class Preternatural < Formula
         tool_name = File.basename(zip_file, suffix)
         
         # Install the binary
-        binary_path = "final-artifact/#{tool_name}/bin/#{tool_name}"
+        binary_path = "#{zip_dir}/#{tool_name}/bin/#{tool_name}"
         bin.install binary_path if File.exist?(binary_path)
       end
     end
