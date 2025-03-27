@@ -31,13 +31,13 @@ class Preternatural < Formula
     end
   end
 
-  # Define services for each daemon
-  Dir.glob("*-daemon.zip").each do |daemon_zip|
+  # Define service for the daemon if one exists
+  daemon_file = Dir.glob("*-daemon.zip").first
+  if daemon_file
     service do
-      name File.basename(daemon_zip, "-daemon.zip")
-      run [opt_bin/File.basename(daemon_zip, "-daemon.zip")]
+      daemon_name = File.basename(daemon_file, "-daemon.zip")
+      run [opt_bin/daemon_name]
       keep_alive true
-      environment_variables PATH: std_service_path_env
       working_dir HOMEBREW_PREFIX
     end
   end
