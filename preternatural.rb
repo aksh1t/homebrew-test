@@ -32,6 +32,7 @@ class Preternatural < Formula
     run [opt_bin/"preternaturald"]
     run_type :immediate
     keep_alive true
+    run_at_load true
     require_root true
     log_path var/"log/preternaturald.log"
     error_log_path var/"log/preternaturald.err.log"
