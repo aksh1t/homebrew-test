@@ -15,9 +15,9 @@ class Preternatural < Formula
       ["*-daemon.zip", "-daemon.zip"]
     ].each do |glob_pattern, suffix|
       Dir.glob(glob_pattern).each do |zip_name|
+        cache_name = File.basename(cached_download, File.extname(cached_download))
         cache_dir = File.dirname(cached_download)
-        zip_file = "#{cache_dir}/#{zip_file}"
-        zip_dir = File.dirname(zip_file)
+        zip_file = "#{cache_dir}/#{cache_name}/#{zip_name}"
 
         # Unzip the inner zip file directly
         system "unzip", "-o", zip_file
@@ -26,7 +26,7 @@ class Preternatural < Formula
         tool_name = File.basename(zip_file, suffix)
         
         # Install the binary
-        binary_path = "#{zip_dir}/#{tool_name}/bin/#{tool_name}"
+        binary_path = "#{cache_dir}/#{cache_name}/#{zip_name}/#{tool_name}/bin/#{tool_name}"
         bin.install binary_path if File.exist?(binary_path)
       end
     end
