@@ -1,9 +1,9 @@
-class Preternatural < Formula
-  desc "Preternatural CLI Tool"
+class <classname> < Formula
+  desc "<classname> CLI Tool"
   homepage "https://github.com/PreternaturalAI/homebrew-preternatural"
-  url "https://github.com/aksh1t/homebrew-test/releases/download/preternatural-0.0.16/final-artifact.zip"
-  sha256 "dd31daf7c2b3c415acf8dcdd03c9dd723f143695abbbdb944acbce0fac7531cd"
-  version "0.0.16"
+  url
+  sha256
+  version
 
   def install
     # Unzip the main artifact bundle
@@ -27,14 +27,14 @@ class Preternatural < Formula
       end
     end
   end
-  
+
   service do
-    run [opt_bin/"preternaturald"]
+    run [opt_bin/"<daemonname>"]
     run_type :immediate
     keep_alive true
     run_at_load true
     require_root true
-    log_path var/"log/preternaturald.log"
-    error_log_path var/"log/preternaturald.err.log"
+    log_path var/"log/<daemonname>.log"
+    error_log_path var/"log/<daemonname>.err.log"
   end
 end
