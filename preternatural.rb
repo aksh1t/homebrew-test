@@ -20,13 +20,20 @@ class Preternatural < Formula
         
         # Extract tool name from the zip filename
         tool_name = File.basename(zip_name, suffix)
-        
-        system "ls", "-la"
 
         # Install the binary
         binary_path = "#{tool_name}.artifactbundle/#{tool_name}/bin/#{tool_name}"
         bin.install binary_path if File.exist?(binary_path)
       end
     end
+  end
+  
+  service do
+    run [opt_bin/"preternaturald"]
+    run_type :immediate
+    keep_alive true
+    require_root true
+    log_path var/"log/preternaturald.log"
+    error_log_path var/"log/preternaturald.err.log"
   end
 end
