@@ -1,9 +1,9 @@
 class Preternatural < Formula
   desc "Preternatural CLI Tool"
   homepage "https://github.com/PreternaturalAI/homebrew-preternatural"
-  url "https://github.com/aksh1t/homebrew-test/releases/download/preternatural-0.0.18/final-artifact.zip"
-  sha256 "be8c9eca2ff1c979ab3cb066f7ff2a8ba88f8885e57936de228bb591a1a6a82e"
-  version "0.0.18"
+  url "https://github.com/aksh1t/homebrew-test/releases/download/preternatural-0.0.19/final-artifact.zip"
+  sha256 "4b71fcf8321da733534c5806bd44a4d18365d8735eea1ff1074d6dd64481fc5c"
+  version "0.0.19"
 
   def install
     # Unzip the main artifact bundle
@@ -30,7 +30,8 @@ class Preternatural < Formula
 
   def post_install
     ohai "Starting the preternatural daemon service..."
-    
+    ohai "Installation of the daemon requires sudo access. Please enter your password in the system popup."
+
     # Use AppleScript to prompt for admin rights safely
     script = <<~APPLESCRIPT
       do shell script "brew services start preternatural" with administrator privileges
@@ -42,7 +43,9 @@ class Preternatural < Formula
       opoo "Failed to start the preternatural daemon service."
       ohai "You can manually start it later with: sudo brew services start preternatural"
     else
-      ohai "Preternatural daemon service started successfully!"
+      ohai "preternatural daemon service started successfully!"
+      ohai "You can stop the daemon using `sudo brew services stop preternatural`"
+      ohai "You can restart the daemon using `sudo brew services restart preternatural`"
     end
   end
 
