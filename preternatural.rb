@@ -28,6 +28,24 @@ class Preternatural < Formula
     end
   end
 
+  def post_install
+    ohai "Starting the preternatural daemon service..."
+    
+    # Use AppleScript to prompt for admin rights safely
+    script = <<~APPLESCRIPT
+      do shell script "brew services start preternatural" with administrator privileges
+    APPLESCRIPT
+    
+    system "osascript", "-e", script
+    
+    unless $?.success?
+      opoo "Failed to start the preternatural daemon service."
+      ohai "You can manually start it later with: sudo brew services start preternatural"
+    else
+      ohai "Preternatural daemon service started successfully!"
+    end
+  end
+
   service do
     run [opt_bin/"preternaturald"]
     run_type :immediate
