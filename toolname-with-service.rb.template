@@ -29,6 +29,13 @@ class <classname> < Formula
   end
 
   def post_install
+    # Skip service start in CI/non-interactive environments
+    if ENV["CI"] || !$stdin.tty?
+      ohai "Skipping <toolname> daemon service startup in non-interactive environment"
+      ohai "To start the service manually: sudo brew services start <toolname>"
+      return
+    end
+
     ohai "Starting the <toolname> daemon service..."
     ohai "Installation of the daemon requires sudo access. Please enter your password in the system popup."
 
